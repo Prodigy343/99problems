@@ -17,19 +17,21 @@ defmodule Solutions do
         n+1
     end
 
-    def reverse([h|t], n) when n > 0 do
-        reverse(t ++ h, n-1)
+    def reverse([h]) do
+        [h]
     end
-    def reverse(a, n) when n == 0 do
-        a
+    def reverse([h|t]) do
+        reverse(t) ++ [h]
     end
 
-    def reverse_s([t|h], n) when n > 0 do
-        reverse(h ++ t, n-1)
+    @moduledoc """
+    def reverse_s([t|h]) when n > 0 do
+        [reverse(t) ++ h]
     end
     def reverse_s(a, n) when n == 0 do
         List.to_string(a)
     end
+    """
 
     #Problem 1
     def problem1([]) do
@@ -80,10 +82,11 @@ defmodule Solutions do
         []
     end
     def problem5([h | t]) do
-        reverse(t ++ h, length(t)+1)
+        reverse(t) ++ [h]
     end
+    @moduledoc """
     def problem5(word) do
         reverse_s(String.to_charlist(word), String.length(word)+2)
     end
-
+    """
 end
