@@ -2,7 +2,7 @@
 
 **Problems Link: [99 Problems](https://wiki.haskell.org/H-99:_Ninety-Nine_Haskell_Problems)**
 
-##99 Problems
+## 99 Problems
 
 - [Questions 1 to 10:](https://wiki.haskell.org/99_questions/1_to_10) Lists
 
