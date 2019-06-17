@@ -24,14 +24,79 @@ defmodule Solutions do
         reverse(t) ++ [h]
     end
 
-    @moduledoc """
-    def reverse_s([t|h]) when n > 0 do
-        [reverse(t) ++ h]
+    def palin([h1],[h2]) when h1 == h2 do
+        true
     end
-    def reverse_s(a, n) when n == 0 do
-        List.to_string(a)
+    def palin([h1|_t1],[h2|_t2]) when h1 != h2 do
+        false
     end
-    """
+    def palin([h1|t1],[h2|t2]) when h1 == h2 do
+        palin(t1,t2)
+    end
+
+    def compress([h|t],ph) when ph == h do
+        compress(t,h)
+    end
+    def compress([h|t],ph) when ph != h do
+        [h] ++ compress(t,h)
+    end
+    def compress([h],_ph) do
+        [h]
+    end
+    def compress([],_ph) do
+        []
+    end
+
+    def group([h|t],[]) do
+        group(t,[h])
+    end
+    def group([h|t],[h2|t2]) when h2 == h do
+        group(t,[h2|t2] ++ [h])
+    end
+    def group([h|t],[h2|t2]) when h2 != h do
+        [to_string([h2|t2])] ++ group(t,[h])
+    end
+    def group([],[h2|t2]) do
+        [to_string([h2|t2])]
+    end
+    
+    def encode([h|t]) do
+        [{h,String.length(h)}] ++ encode(t)
+    end
+    def encode([]) do
+        []
+    end
+
+    def encode_less([h|t]) do
+        if String.length(h) == 1 do
+            [h] ++ encode_less(t)
+        else
+            [{h,String.length(h)}] ++ encode_less(t)
+        end
+    end
+    def encode_less([]) do
+        []
+    end
+
+    def decode([]) do
+        []
+    end
+    def decode([h|t]) when is_binary(h) == true do
+        [h] ++ decode(t)
+    end
+    def decode([h|t]) do
+        char_spam(h) ++ decode(t)
+    end
+
+    def char_spam(tuple) when elem(tuple, 1) == 0 do
+        #[elem(tuple, 0)] ++ char_spam({elem(tuple, 0), elem(tuple, 1) - 1})
+        [elem(tuple, 0)]
+    end
+
+    mod
+    def char_spam({c,n}) do
+        n
+    end
 
     #Problem 1
     def problem1([]) do
@@ -84,9 +149,80 @@ defmodule Solutions do
     def problem5([h | t]) do
         reverse(t) ++ [h]
     end
-    @moduledoc """
     def problem5(word) do
-        reverse_s(String.to_charlist(word), String.length(word)+2)
+        reverse(String.to_charlist(word))
     end
-    """
+
+    #Problem 6
+    def problem6([]) do
+        []
+    end
+    def problem6(array) when is_list(array) == true do
+        palin(reverse(array),array)
+    end
+    def problem6(word) when is_binary(word) == true do
+        palin(reverse(String.to_charlist(word)),String.to_charlist(word))
+    end
+
+    #Problem 7
+    def flatten([h|t]) when is_list(h) == true do
+        flatten(h) ++ flatten(t)
+    end
+    def flatten([h|t]) do
+        [h] ++ flatten(t)
+    end
+    def flatten([]) do
+        []
+    end
+    def problem7([]) do
+        []
+    end
+    def problem7([h|t]) do
+        flatten([h|t])
+    end
+    
+    #Problem 8
+    def problem8([]) do
+        []
+    end
+    def problem8([h|t]) do
+        compress([h|t],h)
+    end
+    def problem8(word) do
+        compress(String.to_charlist(word), String.first(word))
+    end
+
+    #Problem 9
+    def problem9([]) do
+        []
+    end
+    def problem9([h|t]) do
+        group([h|t],[])
+    end
+
+    #Problem 10
+    def problem10([]) do
+        []
+    end
+    def problem10(word) do
+        encode(problem9(String.to_charlist(word)))
+    end
+
+    #Problem 11
+    def problem11([]) do
+        []
+    end
+    def problem11(word) do
+        encode_less(problem9(String.to_charlist(word)))
+    end
+
+    #Problem 12
+    def problem12([]) do
+        []
+    end
+    
+    def problem12(list) do
+        decode(list)
+    end
+
 end
